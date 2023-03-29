@@ -140,6 +140,29 @@ namespace Player
             _rigidbody.position = new Vector2(_rigidbody.position.x, _startJumpVerticalPosition);
             _rigidbody.gravityScale = 0;
         }
-        
+
+        /*public void StartAttack()
+        {
+            if (_animator.PlayAnimation(AnimationType.Attack, true))
+                return;
+
+            _animator.ActionRequested += Attack;
+            _animator.AnimationEnded += EndAttack;
+            Console.Write("StartAttack");
+        }
+
+        private void Attack()
+        {
+            Debug.Log("Attack");
+            Console.Write("Attack");
+        }
+
+        private void EndAttack()
+        {
+            _animator.ActionRequested -= Attack;
+            _animator.AnimationEnded -= EndAttack;
+            _animator.PlayAnimation(AnimationType.Attack, false);
+            Console.Write("EndAttack");
+        }*/
     }
 }
