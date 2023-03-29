@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Core.Enums;
 using Core.Tools;
+using Player.PlayerAnimation;
 using UnityEngine;
 
 namespace Player
@@ -11,6 +12,8 @@ namespace Player
 
     public class PlayerEntity : MonoBehaviour
     {
+        [SerializeField] private AnimatorController _animator;
+        
         [Header("HorizontalMovement")]
         [SerializeField] private float _horizontalSpeed;
         [SerializeField] private Direction _direction;
@@ -35,6 +38,8 @@ namespace Player
         private bool _isJumping;
         private float _startJumpVerticalPosition;
 
+        private Vector2 _movement;
+
         private void Start()
         {
             _rigidbody = GetComponent<Rigidbody2D>();
@@ -48,11 +53,21 @@ namespace Player
         private void Update()
         {
             if(_isJumping)
-              UpdateJump(); 
+              UpdateJump();
+
+            UpdateAnimation();
+        }
+
+        private void UpdateAnimation()
+        {
+            _animator.PlayAnimation(AnimationType.Idle, true);
+            _animator.PlayAnimation(AnimationType.Walk, _movement.magnitude > 0);
+            _animator.PlayAnimation(AnimationType.Jump, _isJumping);
         }
 
         public void MoveHorizontally(float direction)
         {
+            _movement.x = direction;
             SetDirection(direction);
             Vector2 velocity = _rigidbody.velocity;
             velocity.x = direction * _horizontalSpeed;
@@ -63,7 +78,8 @@ namespace Player
         {
             if(_isJumping)
                 return;
-            
+
+            _movement.y = direction;
             Vector2 velocity = _rigidbody.velocity;
             velocity.y = direction * _verticakSpeed;
             _rigidbody.velocity = velocity;
@@ -124,5 +140,6 @@ namespace Player
             _rigidbody.position = new Vector2(_rigidbody.position.x, _startJumpVerticalPosition);
             _rigidbody.gravityScale = 0;
         }
+        
     }
 }
