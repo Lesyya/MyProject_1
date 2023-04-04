@@ -4,6 +4,8 @@ using Core.Tools;
 using Core.Animation;
 using UnityEngine;
 using InputReader;
+using StatsSystem;
+using Unity.VisualScripting;
 
 namespace Player
 {
@@ -24,10 +26,10 @@ namespace Player
         private DirectionalMover _directionalMover;
         private Jumper _jumper;
 
-        private void Start()
+        public void Initialize(IStatValueGiver statValueGiver)
         {
             _rigidbody = GetComponent<Rigidbody2D>();
-            _directionalMover = new DirectionalMover(_rigidbody, _directionalMovementData);
+            _directionalMover = new DirectionalMover(_rigidbody, _directionalMovementData, statValueGiver);
             _jumper = new Jumper(_rigidbody, _jumpData, _directionalMovementData.MaxSize);
         }
 
