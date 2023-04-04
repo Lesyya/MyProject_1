@@ -1,20 +1,26 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using Core.Services.Updater;
+using InputReader;
 
 namespace Player
 {
-    public class PlayerBrain
+    public class PlayerBrain : IDisposable
     {
         private readonly PlayerEntity _playerEntity;
-        private readonly List<IEntetyInputSource> _inputSources;
+        private readonly List<IEntityInputSource> _inputSources;
         
-        public PlayerBrain(PlayerEntity playerEntity, List<IEntetyInputSource> inputSources)
+        public PlayerBrain(PlayerEntity playerEntity, List<IEntityInputSource> inputSources)
         {
             _playerEntity = playerEntity;
             _inputSources = inputSources;
+            ProjectUpdater.Instance.FixedUpdateCalled += OnFixedUpDate;
         }
 
-        public void OnFixedUpDate()
+        public void Dispose() => ProjectUpdater.Instance.FixedUpdateCalled -= OnFixedUpDate;
+
+        private void OnFixedUpDate()
         {
             _playerEntity.MoveHorizontally(GetHorizontalDirection());
             _playerEntity.MoveVertically(GetVerticalDirection());
@@ -27,7 +33,6 @@ namespace Player
 
             foreach (var inputSource in _inputSources)
                 inputSource.ResetOneTimeActions();
-            
         }
 
         private float GetHorizontalDirection()
