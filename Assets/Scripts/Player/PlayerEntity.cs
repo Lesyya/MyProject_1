@@ -3,9 +3,7 @@ using Core.Movement.Data;
 using Core.Tools;
 using Core.Animation;
 using UnityEngine;
-using InputReader;
 using StatsSystem;
-using Unity.VisualScripting;
 
 namespace Player
 {
@@ -33,10 +31,31 @@ namespace Player
             _jumper = new Jumper(_rigidbody, _jumpData, _directionalMovementData.MaxSize);
         }
 
+        public void MoveHorizontally(float direction) => _directionalMover.MoveHorizontally(direction);
+
+        public void MoveVertically(float direction)
+        {
+            if(_jumper.IsJumping)
+                return;
+            
+            _directionalMover.MoveVertically(direction);
+        }
+
+        public void Jump() => _jumper.Jump();
+
+        public void StartAttack()
+        {
+            if (!_animator.PlayAnimation(AnimationType.Attack, true))
+                return;
+
+            _animator.ActionRequested += Attack;
+            _animator.AnimationEnded += EndAttack;
+        }
+        
         private void Update()
         {
             if(_jumper.IsJumping)
-              _jumper.UpdateJump();
+                _jumper.UpdateJump();
 
             UpdateAnimation();
             UpdateCameras();
@@ -55,32 +74,9 @@ namespace Player
             _animator.PlayAnimation(AnimationType.Jump, _jumper.IsJumping);
         }
 
-        public void MoveHorizontally(float direction) => _directionalMover.MoveHorizontally(direction);
-
-        public void MoveVertically(float direction)
-        {
-            if(_jumper.IsJumping)
-                return;
-            
-            _directionalMover.MoveVertically(direction);
-        }
-
-        public void Jump() => _jumper.Jump();
-
-        /*public void StartAttack()
-        {
-            if (_animator.PlayAnimation(AnimationType.Attack, true))
-                return;
-
-            _animator.ActionRequested += Attack;
-            _animator.AnimationEnded += EndAttack;
-            Console.Write("StartAttack");
-        }
-
         private void Attack()
         {
             Debug.Log("Attack");
-            Console.Write("Attack");
         }
 
         private void EndAttack()
@@ -88,7 +84,6 @@ namespace Player
             _animator.ActionRequested -= Attack;
             _animator.AnimationEnded -= EndAttack;
             _animator.PlayAnimation(AnimationType.Attack, false);
-            Console.Write("EndAttack");
-        }*/
+        }
     }
 }

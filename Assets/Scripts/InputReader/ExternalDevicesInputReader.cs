@@ -11,7 +11,7 @@ using InputReader;
         public float VerticalDirection => Input.GetAxisRaw("Vertical");
         
         public  bool Jump { get; private set; }
-        //public  bool Attack { get; private set; }
+        public  bool Attack { get; private set; }
 
         public ExternalDevicesInputReader()
         {
@@ -21,7 +21,7 @@ using InputReader;
         public void ResetOneTimeActions()
         {
             Jump = false;
-            //Attack = false;
+            Attack = false;
         }
 
         public void Dispose() => ProjectUpdater.Instance.UpdateCalled -= OnUpdate;
@@ -31,8 +31,8 @@ using InputReader;
             if (Input.GetButtonDown("Jump"))
                 Jump = true;
     
-            //if (!IsPointerOverUi() && Input.GetButtonDown("Fire1"))
-                //Attack = true;
+            if (!IsPointerOverUi() && Input.GetButtonDown("Fire1"))
+                Attack = true;
         }
 
         private bool IsPointerOverUi() => EventSystem.current.IsPointerOverGameObject();

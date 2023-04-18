@@ -1,11 +1,5 @@
 using Core.Movement.Data;
 using UnityEngine;
-//using InputReader;
-//using Core.Animation;
-using Player;
-using Core.Enums;
-//using Core.Services.Updater;
-using Core.Tools;
 
 namespace Core.Movement.Controller
 {

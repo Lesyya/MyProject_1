@@ -1,11 +1,6 @@
 using UnityEngine;
 using Core.Enums;
 using Core.Movement.Data;
-//using InputReader;
-//using Core.Animation;
-using Player;
-//using Core.Services.Updater;
-using Core.Tools;
 using StatsSystem;
 using StatsSystem.Enum;
 

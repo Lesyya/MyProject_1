@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,7 +8,7 @@ namespace InputReader
         [SerializeField] private Joystick _joystick;
         [SerializeField] private Button _jumpButton;
         [SerializeField] private Button _attackButton;
-        [SerializeField] private Button _inventoryButton;
+        //[SerializeField] private Button _inventoryButton;
         
         public float HorizontalDirection => _joystick.Horizontal;
     
@@ -33,7 +32,7 @@ namespace InputReader
         public void ResetOneTimeActions()
         {
             Jump = false;
-            //Attack = false;
+            Attack = false;
         }
     }
 }

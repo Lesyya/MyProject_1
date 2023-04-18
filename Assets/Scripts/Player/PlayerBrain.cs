@@ -28,8 +28,8 @@ namespace Player
             if(IsJump)
                 _playerEntity.Jump();
             
-            /*if(IsAttack)
-                _playerEntity.StartAttack();*/
+            if(IsAttack)
+                _playerEntity.StartAttack();
 
             foreach (var inputSource in _inputSources)
                 inputSource.ResetOneTimeActions();
@@ -62,6 +62,6 @@ namespace Player
         }
 
         private bool IsJump => _inputSources.Any(source => source.Jump);
-        //private bool IsAttack => _inputSources.Any(source => source.Attack);
+        private bool IsAttack => _inputSources.Any(source => source.Attack);
     }
 }
